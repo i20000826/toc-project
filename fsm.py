@@ -4,33 +4,35 @@ from utils import send_text_message
 
 
 class TocMachine(GraphMachine):
+    """
     def __init__(self, **machine_configs):
-        self.machine = GraphMachine(model=self, **machine_configs)
+        self.machine = GraphMachine(model = self, **machine_configs)
 
-    def is_going_to_state1(self, event):
+    def is_going_to_menu(self, event):
         text = event.message.text
-        return text.lower() == "go to state1"
+        return text.lower() == "go to menu"
 
-    def is_going_to_state2(self, event):
+    def on_enter_menu(self, event):
+        print("I'm entering menu")
+
+        send_text_message(event.reply_token, "menu")
+        # self.go_back()
+
+    def is_going_to_forbidden_forest(self, event):
         text = event.message.text
-        return text.lower() == "go to state2"
+        return text.lower() == "go to forbidden_forest"
 
-    def on_enter_state1(self, event):
-        print("I'm entering state1")
+    def on_enter_forbidden_forest(self, event):
+        print("I'm entering forbidden_forest")
 
-        reply_token = event.reply_token
-        send_text_message(reply_token, "Trigger state1")
-        self.go_back()
+        send_text_message(event.reply_token, "forbidden_forest")
+        # self.go_back()
+    """
 
+    """
     def on_exit_state1(self):
-        print("Leaving state1")
+        print("Leaving menu")
 
-    def on_enter_state2(self, event):
-        print("I'm entering state2")
-
-        reply_token = event.reply_token
-        send_text_message(reply_token, "Trigger state2")
-        self.go_back()
-
-    def on_exit_state2(self):
-        print("Leaving state2")
+    def on_exit_forbidden_forest(self):
+        print("Leaving forbidden_forest")
+    """

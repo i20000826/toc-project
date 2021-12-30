@@ -14,28 +14,90 @@ load_dotenv()
 
 
 machine = TocMachine(
-    states=["user", "state1", "state2"],
-    transitions=[
+    states = ["user", "forbidden_forest", "furniture", "fsm_img", 
+              "centaur", "potion", "unicorn", "dog", "daniel", "galleon", "graphorn", "thunder", "seeker"], 
+    transitions = [
         {
             "trigger": "advance",
             "source": "user",
-            "dest": "state1",
-            "conditions": "is_going_to_state1",
+            "dest": "forbidden_forest",
+            "conditions": "is_going_to_forbidden_forest",
         },
         {
             "trigger": "advance",
             "source": "user",
-            "dest": "state2",
-            "conditions": "is_going_to_state2",
+            "dest": "furniture",
+            "conditions": "is_going_to_furniture",
         },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
+        {
+            "trigger": "advance",
+            "source": "user",
+            "dest": "fsm_img",
+            "conditions": "is_going_to_fsm_img",
+        },
+        {
+            "trigger": "advance",
+            "source": "forbidden_forest",
+            "dest": "centaur",
+            "conditions": "is_going_to_centaur",
+        },
+        {
+            "trigger": "advance",
+            "source": "forbidden_forest",
+            "dest": "potion",
+            "conditions": "is_going_to_potion",
+        },
+        {
+            "trigger": "advance",
+            "source": "forbidden_forest",
+            "dest": "unicorn",
+            "conditions": "is_going_to_unicorn",
+        },
+        {
+            "trigger": "advance",
+            "source": "forbidden_forest",
+            "dest": "dog",
+            "conditions": "is_going_to_dog",
+        },
+        {
+            "trigger": "advance",
+            "source": "forbidden_forest",
+            "dest": "daniel",
+            "conditions": "is_going_to_daniel",
+        },
+        {
+            "trigger": "advance",
+            "source": "forbidden_forest",
+            "dest": "galleon",
+            "conditions": "is_going_to_galleon",
+        },
+        {
+            "trigger": "advance",
+            "source": "forbidden_forest",
+            "dest": "graphorn",
+            "conditions": "is_going_to_graphorn",
+        },
+        {
+            "trigger": "advance",
+            "source": "forbidden_forest",
+            "dest": "thunder",
+            "conditions": "is_going_to_thunder",
+        },
+        {
+            "trigger": "advance",
+            "source": "forbidden_forest",
+            "dest": "seeker",
+            "conditions": "is_going_to_seeker",
+        },
+        {"trigger": "go_back", "source": ["forbidden_forest", "furniture", "fsm_img", "centaur", 
+            "potion", "unicorn", "dog", "daniel", "galleon", "graphorn", "thunder", "seeker"], "dest": "user"},
     ],
-    initial="user",
-    auto_transitions=False,
-    show_conditions=True,
+    initial = "user",
+    auto_transitions = False,
+    show_conditions = True,
 )
 
-app = Flask(__name__, static_url_path="")
+app = Flask(__name__, static_url_path = "")
 
 
 # get channel_secret and channel_access_token from your environment variable
@@ -52,11 +114,11 @@ line_bot_api = LineBotApi(channel_access_token)
 parser = WebhookParser(channel_secret)
 
 
-@app.route("/callback", methods=["POST"])
+@app.route("/callback", methods = ["POST"])
 def callback():
     signature = request.headers["X-Line-Signature"]
     # get request body as text
-    body = request.get_data(as_text=True)
+    body = request.get_data(as_text = True)
     app.logger.info("Request body: " + body)
 
     # parse webhook body
@@ -73,17 +135,18 @@ def callback():
             continue
 
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=event.message.text)
+            event.reply_token, TextSendMessage(text = event.message.text)
         )
 
     return "OK"
 
 
-@app.route("/webhook", methods=["POST"])
+"""
+@app.route("/webhook", methods = ["POST"])
 def webhook_handler():
     signature = request.headers["X-Line-Signature"]
     # get request body as text
-    body = request.get_data(as_text=True)
+    body = request.get_data(as_text = True)
     app.logger.info(f"Request body: {body}")
 
     # parse webhook body
@@ -107,14 +170,15 @@ def webhook_handler():
             send_text_message(event.reply_token, "Not Entering any State")
 
     return "OK"
+"""
 
 
-@app.route("/show-fsm", methods=["GET"])
+@app.route("/show-fsm", methods = ["GET"])
 def show_fsm():
-    machine.get_graph().draw("fsm.png", prog="dot", format="png")
-    return send_file("fsm.png", mimetype="image/png")
+    machine.get_graph().draw("fsm.png", prog = "dot", format = "png")
+    return send_file("fsm.png", mimetype = "image/png")
 
 
 if __name__ == "__main__":
     port = os.environ.get("PORT", 8000)
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(host = "0.0.0.0", port = port, debug = True)

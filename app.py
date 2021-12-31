@@ -8,14 +8,14 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 from fsm import TocMachine
-from utils import send_text_message
+from utils import send_text_message, send_image_message
 
 load_dotenv()
 
 
 machine = TocMachine(
     states = ["user", "forbidden_forest", "furniture", "fsm_img", 
-              "centaur", "potion", "unicorn", "dog", "daniel", "galleon", "graphorn", "thunder", "seeker"], 
+              "centaur", "potion", "unicorn", "dog", "daniel", "galleon", "graphorn", "thunder", "seeker", "menu"], 
     transitions = [
         {
             "trigger": "advance",
@@ -89,8 +89,27 @@ machine = TocMachine(
             "dest": "seeker",
             "conditions": "is_going_to_seeker",
         },
-        {"trigger": "go_back", "source": ["forbidden_forest", "furniture", "fsm_img", "centaur", 
-            "potion", "unicorn", "dog", "daniel", "galleon", "graphorn", "thunder", "seeker"], "dest": "user"},
+        {
+            "trigger": "advance",
+            "source": "forbidden_forest",
+            "dest": "menu",
+            "conditions": "is_going_to_menu",
+        },
+        {
+            "trigger": "advance",
+            "source": "furniture",
+            "dest": "menu",
+            "conditions": "is_going_to_menu",
+        },
+        {
+            "trigger": "advance",
+            "source": "fsm_img",
+            "dest": "menu",
+            "conditions": "is_going_to_menu",
+        },
+        {"trigger": "go_back", "source": ["centaur", "potion", "unicorn", "dog", "daniel", 
+            "galleon", "graphorn", "thunder", "seeker"], "dest": "forbidden_forest"},
+        {"trigger": "go_back", "source": "menu", "dest": "user"},
     ],
     initial = "user",
     auto_transitions = False,
@@ -114,6 +133,7 @@ line_bot_api = LineBotApi(channel_access_token)
 parser = WebhookParser(channel_secret)
 
 
+"""
 @app.route("/callback", methods = ["POST"])
 def callback():
     signature = request.headers["X-Line-Signature"]
@@ -139,9 +159,9 @@ def callback():
         )
 
     return "OK"
-
-
 """
+
+
 @app.route("/webhook", methods = ["POST"])
 def webhook_handler():
     signature = request.headers["X-Line-Signature"]
@@ -165,12 +185,15 @@ def webhook_handler():
             continue
         print(f"\nFSM STATE: {machine.state}")
         print(f"REQUEST BODY: \n{body}")
+
         response = machine.advance(event)
         if response == False:
-            send_text_message(event.reply_token, "Not Entering any State")
+            if event.message.text.lower() == 'fsm':
+                send_image_message(event.reply_token, 'https://f74086153.herokuapp.com/show-fsm')
+            else:
+                send_text_message(event.reply_token, "請輸入正確單詞")
 
     return "OK"
-"""
 
 
 @app.route("/show-fsm", methods = ["GET"])

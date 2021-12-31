@@ -40,16 +40,6 @@ class TocMachine(GraphMachine):
             "輸入「主選單」返回主選單"
         )
 
-    # def is_going_to_fsm_img(self, event):
-    #     text = event.message.text
-    #     if (text == "fsm"):
-    #         return True
-    #     return False
-
-    # def on_enter_fsm_img(self, event):
-        # send_image_message(event.reply_token, 'https://f74086153.herokuapp.com/show-fsm')
-    #     send_text_message(event.reply_token, "fsm\n\n輸入「主選單」返回主選單")
-
     def is_going_to_centaur(self, event):
         text = event.message.text
         if (text == "尋訪人馬"):
@@ -330,6 +320,6 @@ class TocMachine(GraphMachine):
 
     def on_enter_menu(self, event):
         send_text_message(event.reply_token, "霍格華茲的學生你好\n"
-            "輸入「禁忌森林」取得禁森手記攻略\n輸入「大世界收集」取得家具獲取方式\n輸入「fsm」取得fsm狀態圖"
+            "輸入「禁忌森林」取得禁森手記攻略\n輸入「大世界收集」取得家具獲取方式\n隨時輸入「fsm」取得fsm狀態圖"
         )
         self.go_back()

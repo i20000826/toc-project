@@ -14,15 +14,9 @@ load_dotenv()
 
 
 machine = TocMachine(
-    states = ["user", "forbidden_forest", "furniture", "fsm_img", 
+    states = ["user", "forbidden_forest", "furniture", 
               "centaur", "potion", "unicorn", "dog", "daniel", "galleon", "graphorn", "thunder", "seeker", "menu"], 
     transitions = [
-        {
-            "trigger": "advance",
-            "source": "user",
-            "dest": "forbidden_forest",
-            "conditions": "is_going_to_forbidden_forest",
-        },
         {
             "trigger": "advance",
             "source": "user",
@@ -32,8 +26,8 @@ machine = TocMachine(
         {
             "trigger": "advance",
             "source": "user",
-            "dest": "fsm_img",
-            "conditions": "is_going_to_fsm_img",
+            "dest": "forbidden_forest",
+            "conditions": "is_going_to_forbidden_forest",
         },
         {
             "trigger": "advance",
@@ -98,12 +92,6 @@ machine = TocMachine(
         {
             "trigger": "advance",
             "source": "furniture",
-            "dest": "menu",
-            "conditions": "is_going_to_menu",
-        },
-        {
-            "trigger": "advance",
-            "source": "fsm_img",
             "dest": "menu",
             "conditions": "is_going_to_menu",
         },
@@ -190,6 +178,7 @@ def webhook_handler():
         if response == False:
             if event.message.text.lower() == 'fsm':
                 send_image_message(event.reply_token, 'https://f74086153.herokuapp.com/show-fsm')
+                # send_image_message(event.reply_token, 'https://903b-36-237-116-135.ngrok.io/show-fsm') # expired
             else:
                 send_text_message(event.reply_token, "請輸入正確單詞")
 

@@ -16,7 +16,7 @@ pip install flask python-dotenv line-bot-sdk transitions pygraphviz
 ```
 
 #### ngrok
-下載ngrok<>
+下載ngrok<br>
 在ngrok輸入: `ngrok http 8000`
 在terminal執行: `python app.py`
 

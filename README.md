@@ -57,30 +57,90 @@ debug輸入: `heroku logs --tail --app [HEROKU_APP_NAME]` <br>
 ![fsm](./fsm.png)
 
 ## 實作
-起因: 每次都要上網查攻略很麻煩, 而且有些~壞傢伙提供的~攻略資訊有誤, 於是透過本次作業將正確的攻略整合在一起, 方便查詢!
+起因: 每次都要上網查攻略很麻煩, 而且有些~壞傢伙提供的~攻略資訊有誤, 於是透過本次作業將正確的攻略整合在一起, 方便查詢! <br>
 
 初始state為"user" <br>
 "user"可以去到"achievement", "furniture", "divination_1", "forbidden_forest_1", "menu" <br>
-隨時都可以輸入「fsm」「主選單」
+隨時都可以輸入「fsm」「主選單」 <br>
 
 ### achievement 神秘成就
 
+#### 架構
+* 神秘成就
+	* 自強不息
+	* 福來再現
+	* 不幸成真
+	* 無期徒刑
+	* 夜遊之神
+	* 魔法史先驅
+	* 魁地奇之星
+	* 巨蛛殺手
+
+#### line畫面
+
 ### furniture 大世界收集
+
+#### 架構
+* 大世界收集
+	* 常駐款
+		* 學院
+		* 經典
+		* 糖果主題
+		* 禁忌森林主題
+	* 限定款
+		* 魔藥狂熱
+		* 兩腳蛇迷蹤
+		* 萬聖節主題
+		* 冰雪主題
+		* 聖誕主題
+		* 煙火主題
+	* 隱藏款
+		* 碧藍深海
+		* 釀造榮譽
+		* 魔法時鐘
+		* 龍蛋標本
+		* 水晶球
+		* 飛天掃帚
+		* 結網蜘蛛
+		* 紫角獸地毯
+
+#### line畫面
 
 ### divination 占卜學圖鑑
 ~幸好在project deadline前成功解完, 我好好看~
 
+#### 架構
+* 占卜學圖鑑/上一輪
+	* 難度1
+	* 難度2
+	* 難度3
+	* 下一輪
+* 下一輪
+	* 難度4
+	* 難度5
+	* 上一輪
+
+#### line畫面
+
 ### forbidden_forest 禁忌森林
 
+#### 架構
+* 禁忌森林/第一批線索
+	* 尋訪人馬
+	* 魔藥事故
+	* 追尋獨角獸
+	* 第二批線索
+* 第二批線索
+	* 尋犬啟示
+	* 丹尼爾的抉擇
+	* 加隆竊賊
+	* 第三批線索
+* 第三批線索
+	* 紫角獸之災
+	* 跟隨閃電
+	* 搜尋搜捕手
+	* 第一批線索
 
-
-Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
-
-* user
-	* Input: "go to state1"
-		* Reply: "I'm entering state1"
-
-	* Input: "go to state2"
-		* Reply: "I'm entering state2"
+#### line畫面
 
 

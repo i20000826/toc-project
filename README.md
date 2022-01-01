@@ -63,7 +63,7 @@ debug輸入: `heroku logs --tail --app [HEROKU_APP_NAME]` <br>
 "user"可以去到"achievement", "furniture", "divination_1", "forbidden_forest_1", "menu" <br>
 隨時都可以輸入「fsm」「主選單」 <br>
 
-![01](./img/01.png)
+![01](./img/01.PNG)
 
 ### achievement 神秘成就
 

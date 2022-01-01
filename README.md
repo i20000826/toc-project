@@ -57,11 +57,13 @@ debug輸入: `heroku logs --tail --app [HEROKU_APP_NAME]` <br>
 ![fsm](./fsm.png)
 
 ## 實作
-起因: 每次都要上網查攻略很麻煩, 而且有些~壞傢伙提供的~攻略資訊有誤, 於是透過本次作業將正確的攻略整合在一起, 方便查詢! <br>
+起因: 每次都要上網查攻略很麻煩, 而且有些攻略資訊有誤, 於是透過本次作業將正確的攻略整合在一起, 方便查詢! <br>
 
 初始state為"user" <br>
 "user"可以去到"achievement", "furniture", "divination_1", "forbidden_forest_1", "menu" <br>
 隨時都可以輸入「fsm」「主選單」 <br>
+
+![01](./img/01.png)
 
 ### achievement 神秘成就
 

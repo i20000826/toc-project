@@ -17,14 +17,14 @@ pip install flask python-dotenv line-bot-sdk transitions pygraphviz
 
 #### ngrok
 下載ngrok<br>
-在ngrok輸入: `ngrok http 8000`
-在terminal執行: `python app.py`
+在ngrok輸入: `ngrok http 8000`<br>
+在terminal執行: `python app.py`<br>
 
 #### Heroku
 下載Heroku CLI: https://devcenter.heroku.com/articles/heroku-cli<br>
 註冊Heroku帳號: https://signup.heroku.com<br>
 在Heroku網站Create new app<br>
-在terminal登入Heroku CLI: `heroku login`
+在terminal登入Heroku CLI: `heroku login`<br>
 如果無法辨識heroku: `set PATH=%PATH%;C:\Program Files\heroku\bin`(heroku路徑)<br>
 執行以下指令
 ```
@@ -44,8 +44,8 @@ git commit -m "Add code"
 
 git push -f heroku master
 ```
-在line的webhook url輸入: `[HEROKU_APP_NAME].herokuapp.com/webhook`
-debug輸入: `heroku logs --tail --app [HEROKU_APP_NAME]`
+在line的webhook url輸入: `[HEROKU_APP_NAME].herokuapp.com/webhook`<br>
+debug輸入: `heroku logs --tail --app [HEROKU_APP_NAME]`<br>
 
 ## Finite State Machine
 ![fsm](./fsm.png)

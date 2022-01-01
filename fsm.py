@@ -1,21 +1,30 @@
 from transitions.extensions import GraphMachine
-
-from utils import send_text_message, send_image_message
+from linebot.models import MessageTemplateAction
+from utils import send_text_message, send_image_message, send_button_message
 
 
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model = self, **machine_configs)
 
-    def is_going_to_forbidden_forest(self, event):
+    def is_going_to_achievement(self, event):
         text = event.message.text
-        if (text == "禁忌森林"):
+        if (text == "神秘成就"):
             return True
         return False
 
-    def on_enter_forbidden_forest(self, event):
-        send_text_message(event.reply_token, "請輸入想查詢的線索:\n尋訪人馬\n魔藥事故\n追尋獨角獸\n尋犬啟示\n"
-            "丹尼爾的抉擇\n加隆竊賊\n紫角獸之災\n跟隨閃電\n搜尋搜捕手\n\n輸入「主選單」返回主選單")
+    def on_enter_achievement(self, event):
+        send_text_message(event.reply_token, "神秘成就\n"
+            "自強不息: 單人通關5星以上紫色禁忌森林\n"
+            "福來再現: 一張圖書證中學習三張傳說咒語\n"
+            "不幸成真: 連續五次觸發借閱保底\n"
+            "無期徒刑: PVP戰鬥中使用不赦咒300次(啊哇呾喀呾啦 咒咒虐)\n"
+            "夜遊之神: 去四院交誼廳(需要隱形藥水)\n"
+            "魔法史先驅: 社團問答中唯一答對\n"
+            "魁地奇之星: 在一場魁地奇比賽中投進10個球\n"
+            "巨蛛殺手: 15分鐘內通關巨蛛領地五星難度\n\n"
+            "輸入「主選單」返回主選單"
+        )
 
     def is_going_to_furniture(self, event):
         text = event.message.text
@@ -24,21 +33,269 @@ class TocMachine(GraphMachine):
         return False
 
     def on_enter_furniture(self, event):
-        send_text_message(event.reply_token, "大世界收集\n"
-            "學院: 送的\n經典: 完成初級成就\n糖果主題: 完成進階成就\n禁忌森林主題: 解鎖禁森手記\n"
+        title = "請選擇想查詢的家具"
+        text = "限定款好看 隱藏款特別"
+        btn = [
+            MessageTemplateAction(
+                label = "常駐款",
+                text = "常駐款"
+            ),
+            MessageTemplateAction(
+                label = "限定款",
+                text = "限定款"
+            ),
+            MessageTemplateAction(
+                label = "隱藏款",
+                text = "隱藏款"
+            ),
+            MessageTemplateAction(
+                label = "主選單",
+                text = "主選單"
+            ),
+        ]
+        url = "https://i.imgur.com/eGCwVab.jpg"
+        send_button_message(event.reply_token, title, text, btn, url)
+
+    def is_going_to_always(self, event):
+        text = event.message.text
+        if (text == "常駐款"):
+            return True
+        return False
+
+    def on_enter_always(self, event):
+        send_text_message(event.reply_token, "大世界收集 常駐款\n"
+            "學院: 送的\n經典: 完成初級成就\n糖果主題: 完成進階成就\n禁忌森林主題: 解鎖禁森手記"
+        )
+        self.go_back()
+
+    def is_going_to_limited(self, event):
+        text = event.message.text
+        if (text == "限定款"):
+            return True
+        return False
+
+    def on_enter_limited(self, event):
+        send_text_message(event.reply_token, "大世界收集 限定款\n"
             "魔藥狂熱: 第一期轉盤(2021.09)\n"
             "兩腳蛇迷蹤: 第二期轉盤(2021.10)\n"
             "萬聖節主題: 第三期轉盤(2021.11)\n"
             "冰雪主題: 第四期轉盤(2021.12)\n"
-            "聖誕主題: 限時禮包獲得\n"
-            "煙火主題: 第五期轉盤(2022.01)\n\n"
-            "隱藏款家具(藍色紫色線索8~10星機率掉落，紅色線索4~5星機率掉落)\n"
+            "聖誕主題: 限時禮包獲得(2021聖誕節)\n"
+            "煙火主題: 第五期轉盤(2022.01)"
+        )
+        self.go_back()
+
+    def is_going_to_hidden(self, event):
+        text = event.message.text
+        if (text == "隱藏款"):
+            return True
+        return False
+
+    def on_enter_hidden(self, event):
+        send_text_message(event.reply_token, "大世界收集 隱藏款\n"
+            "藍紫色線索8~10星機率掉落，紅色線索4~5星機率掉落\n"
             "帷幔 碧藍深海: 尋犬啟示 追尋獨角獸\n"
             "櫃飾 釀造榮譽: 加隆竊賊\n"
             "擺件 魔法時鐘: 尋訪人馬 魔藥事故\n\t 龍蛋標本: 丹尼爾的抉擇\n\t 水晶球: 跟隨閃電\n\t 飛天掃帚: 追尋搜捕手\n\t 結網蜘蛛:紫紅線索\n"
-            "地毯 紫角獸地毯: 紫角獸之災\n\n"
-            "輸入「主選單」返回主選單"
+            "地毯 紫角獸地毯: 紫角獸之災"
         )
+        self.go_back()
+
+    def is_going_to_divination_1(self, event):
+        text = event.message.text
+        if (text == "占卜學圖鑑" or text == "上一輪"):
+            return True
+        return False
+
+    def on_enter_divination_1(self, event):
+        title = "請選擇想查詢的難度"
+        text = "繼續選擇難度查詢或輸入「主選單」返回主選單"
+        btn = [
+            MessageTemplateAction(
+                label = "難度1",
+                text = "難度1"
+            ),
+            MessageTemplateAction(
+                label = "難度2",
+                text = "難度2"
+            ),
+            MessageTemplateAction(
+                label = "難度3",
+                text = "難度3"
+            ),
+            MessageTemplateAction(
+                label = "下一輪",
+                text = "下一輪"
+            ),
+        ]
+        url = "https://i.imgur.com/946WarB.jpg"
+        send_button_message(event.reply_token, title, text, btn, url)
+
+    def is_going_to_level_1(self, event):
+        text = event.message.text
+        if (text == "難度1"):
+            return True
+        return False
+
+    def on_enter_level_1(self, event):
+        send_image_message(event.reply_token, "https://i.imgur.com/hs0vkYK.jpg")
+        self.go_back()
+
+    def is_going_to_level_2(self, event):
+        text = event.message.text
+        if (text == "難度2"):
+            return True
+        return False
+
+    def on_enter_level_2(self, event):
+        send_image_message(event.reply_token, "https://i.imgur.com/GNr8MFL.jpg")
+        self.go_back()
+
+    def is_going_to_level_3(self, event):
+        text = event.message.text
+        if (text == "難度3"):
+            return True
+        return False
+
+    def on_enter_level_3(self, event):
+        send_image_message(event.reply_token, "https://i.imgur.com/VpnqOCY.jpg")
+        self.go_back()
+
+    def is_going_to_divination_2(self, event):
+        text = event.message.text
+        if (text == "下一輪"):
+            return True
+        return False
+
+    def on_enter_divination_2(self, event):
+        title = "請選擇想查詢的難度"
+        text = "繼續選擇難度查詢或輸入「主選單」返回主選單"
+        btn = [
+            MessageTemplateAction(
+                label = "難度4",
+                text = "難度4"
+            ),
+            MessageTemplateAction(
+                label = "難度5",
+                text = "難度5"
+            ),
+            MessageTemplateAction(
+                label = "上一輪",
+                text = "上一輪"
+            ),
+        ]
+        url = "https://i.imgur.com/946WarB.jpg"
+        send_button_message(event.reply_token, title, text, btn, url)
+
+    def is_going_to_level_4(self, event):
+        text = event.message.text
+        if (text == "難度4"):
+            return True
+        return False
+
+    def on_enter_level_4(self, event):
+        send_image_message(event.reply_token, "https://i.imgur.com/NoltEN8.jpg")
+        self.go_back()
+
+    def is_going_to_level_5(self, event):
+        text = event.message.text
+        if (text == "難度5"):
+            return True
+        return False
+
+    def on_enter_level_5(self, event):
+        send_image_message(event.reply_token, "https://i.imgur.com/llUEvYn.jpg")
+        self.go_back()
+
+    def is_going_to_forbidden_forest_1(self, event):
+        text = event.message.text
+        if (text == "禁忌森林" or text == "第一批線索"):
+            return True
+        return False
+
+    def on_enter_forbidden_forest_1(self, event):
+        title = "請選擇想查詢的線索 此為第一批"
+        text = "繼續選擇線索查詢或輸入「主選單」返回主選單"
+        btn = [
+            MessageTemplateAction(
+                label = "尋訪人馬",
+                text = "尋訪人馬"
+            ),
+            MessageTemplateAction(
+                label = "魔藥事故",
+                text = "魔藥事故"
+            ),
+            MessageTemplateAction(
+                label = "追尋獨角獸",
+                text = "追尋獨角獸"
+            ),
+            MessageTemplateAction(
+                label = "第二批線索",
+                text = "第二批線索"
+            ),
+        ]
+        url = "https://i.imgur.com/WQ79nr8.jpg"
+        send_button_message(event.reply_token, title, text, btn, url)
+
+    def is_going_to_forbidden_forest_2(self, event):
+        text = event.message.text
+        if (text == "第二批線索"):
+            return True
+        return False
+
+    def on_enter_forbidden_forest_2(self, event):
+        title = "請選擇想查詢的線索 此為第二批"
+        text = "繼續選擇線索查詢或輸入「主選單」返回主選單"
+        btn = [
+            MessageTemplateAction(
+                label = "尋犬啟示",
+                text = "尋犬啟示"
+            ),
+            MessageTemplateAction(
+                label = "丹尼爾的抉擇",
+                text = "丹尼爾的抉擇"
+            ),
+            MessageTemplateAction(
+                label = "加隆竊賊",
+                text = "加隆竊賊"
+            ),
+            MessageTemplateAction(
+                label = "第三批線索",
+                text = "第三批線索"
+            ),
+        ]
+        url = "https://i.imgur.com/WQ79nr8.jpg"
+        send_button_message(event.reply_token, title, text, btn, url)
+
+    def is_going_to_forbidden_forest_3(self, event):
+        text = event.message.text
+        if (text == "第三批線索"):
+            return True
+        return False
+
+    def on_enter_forbidden_forest_3(self, event):
+        title = "請選擇想查詢的線索 此為第三批"
+        text = "繼續選擇線索查詢或輸入「主選單」返回主選單"
+        btn = [
+            MessageTemplateAction(
+                label = "紫角獸之災",
+                text = "紫角獸之災"
+            ),
+            MessageTemplateAction(
+                label = "跟隨閃電",
+                text = "跟隨閃電"
+            ),
+            MessageTemplateAction(
+                label = "搜尋搜捕手",
+                text = "搜尋搜捕手"
+            ),
+            MessageTemplateAction(
+                label = "第一批線索",
+                text = "第一批線索"
+            ),
+        ]
+        url = "https://i.imgur.com/WQ79nr8.jpg"
+        send_button_message(event.reply_token, title, text, btn, url)
 
     def is_going_to_centaur(self, event):
         text = event.message.text
@@ -62,8 +319,7 @@ class TocMachine(GraphMachine):
                  "_謝謝，我會幫你留意材料的: 在禁忌森林深處遇到了人馬，他上半身與人無異，下半身則是馬的模樣。他為我的前路作出了預言，但我不太明白……\n\n"
             "結局路線\n"
                  "A結局: 什麼都不觸發\n"
-                 "B結局: 5/7湊近一點聽他們的對話+撿起樹下的龍蛋\n\n"
-            "繼續輸入線索查詢或輸入「主選單」返回主選單"
+                 "B結局: 5/7湊近一點聽他們的對話+撿起樹下的龍蛋"
         )
         self.go_back()
 
@@ -88,8 +344,7 @@ class TocMachine(GraphMachine):
             "結局路線\n"
                 "A結局: 什麼都不觸發\n"
                 "B結局: 5/7和弗雷兄弟說話或無視弗雷兄弟，追蹤蹤跡\n"
-                "C結局: 1/7安靜地偷聽他們在吵什麼+3/7調查空地+5/7告訴弗雷兄弟關於卡珊卓的大釜的事+6/7卡珊卓存活\n\n"
-            "繼續輸入線索查詢或輸入「主選單」返回主選單"
+                "C結局: 1/7安靜地偷聽他們在吵什麼+3/7調查空地+5/7告訴弗雷兄弟關於卡珊卓的大釜的事+6/7卡珊卓存活"
         )
         self.go_back()
 
@@ -127,8 +382,7 @@ class TocMachine(GraphMachine):
                  "A結局: 什麼都不觸發\n"
                  "B結局: 0/7詢問獨角獸的資訊+1/7選右+2/7調查灌木叢+3/7選中+4/7停下來撫摸獨角獸\n"
                  "C結局: 0/7詢問洛蒂的去向+6/7洛蒂存活\n"
-                 "D結局: 0/7詢問洛蒂+1/7選右+2/7調查木樁+拾取畫筆+4/7把畫筆給洛蒂+6/7洛蒂死亡\n\n"
-            "繼續輸入線索查詢或輸入「主選單」返回主選單"
+                 "D結局: 0/7詢問洛蒂+1/7選右+2/7調查木樁+拾取畫筆+4/7把畫筆給洛蒂+6/7洛蒂死亡"
 
         )
         self.go_back()
@@ -156,8 +410,7 @@ class TocMachine(GraphMachine):
             "結局路線\n"
                  "A結局: 什麼都不觸發\n"
                  "B結局: 0/6去找海格+1/6調查水漥+2/6選右+3/6靜靜地跟著黑巫師\n"
-                 "C結局: 0/6去找海格+1/6選放大鏡+2/6選右+3/6繞開黑巫師\n\n"
-            "繼續輸入線索查詢或輸入「主選單」返回主選單"
+                 "C結局: 0/6去找海格+1/6選放大鏡+2/6選右+3/6繞開黑巫師"
         )
         self.go_back()
 
@@ -188,8 +441,7 @@ class TocMachine(GraphMachine):
                  "B結局: 0/7查看岩石+仔細觀察+2/7小心地接近龍寶寶+3/7選右+4/7把龍寶寶安置在一個中空的樹幹中\n"
                  "B結局: 0/7查看岩石+不管蛋了，你必須找到丹尼爾+2/7小心地接近龍寶寶+不理會龍寶寶+3/7選右+4/7溫柔地拿起龍寶寶並把它帶在身邊\n"
                  "C結局: 0/7查看岩石+仔細觀察+2/7小心地接近龍寶寶+3/7選右+4/7溫柔地拿起龍寶寶並把它帶在身邊\n"
-                 "D結局: 0/7忘記岩石……你必須找到丹尼爾+2/7偷偷地跟著龍寶寶+3/7選右+4/7溫柔地拿起龍寶寶並把它帶在身邊\n\n"
-            "繼續輸入線索查詢或輸入「主選單」返回主選單"
+                 "D結局: 0/7忘記岩石……你必須找到丹尼爾+2/7偷偷地跟著龍寶寶+3/7選右+4/7溫柔地拿起龍寶寶並把它帶在身邊"
         )
         self.go_back()
 
@@ -220,8 +472,7 @@ class TocMachine(GraphMachine):
                  "A結局: 什麼都不觸發\n"
                  "B結局: 1/8用加隆吸引玻璃獸的注意力+2/8選中+3/8屏住呼吸偷聽他們說話+保護玻璃獸+4/8選中+5/8接近玻璃獸並試著安慰它+7/8玻璃獸死亡\n"
                  "C結局: 1/8抓住玻璃獸，並把金幣從它的口袋搖出來+2/8選中+3/8先發制人+4/8選中+5/8選放大鏡+7/8玻璃獸存活\n"
-                 "D結局: 1/8不管玻璃獸，繼續前行+2/8選中+3/8屏住呼吸偷聽他們說話+偷偷離開現場+4/8選中+5/8接近玻璃獸並試著安慰它+7/8玻璃獸存活\n\n"
-            "繼續輸入線索查詢或輸入「主選單」返回主選單"
+                 "D結局: 1/8不管玻璃獸，繼續前行+2/8選中+3/8屏住呼吸偷聽他們說話+偷偷離開現場+4/8選中+5/8接近玻璃獸並試著安慰它+7/8玻璃獸存活"
         )
         self.go_back()
 
@@ -251,8 +502,7 @@ class TocMachine(GraphMachine):
                  "B結局: 2/9施展颶風咒+4/9什麼快浮?+6/9選放大鏡+8/9你不想惹麻煩，於是你藏在了一棵樹後面+這就是海格所說的那個走私者+走上前偷聽對話\n"
                  "C結局: 2/9施展颶風咒+4/9什麼快浮?+6/9選放大鏡+8/9你不想惹麻煩，於是你藏在了一棵樹後面+這就是海格所說的那個走私者+在他們看到你之前發起攻擊\n"
                  "C結局: 2/9施展颶風咒+4/9把快浮交給艾略特+6/9選放大鏡+8/9你不想惹麻煩，於是你藏在了一棵樹後面+他不是海格告訴我的走私者+在他們看到你之前發起攻擊\n"
-                 "D結局: 2/9施展颶風咒+4/9把快浮交給艾略特+6/9可能有人不懷好意。禁忌森林是個做壞事的好地方+8/9你不想惹麻煩，於是你藏在了一棵樹後面+他不是海格告訴我的走私者+走上前偷聽對話\n\n"
-            "繼續輸入線索查詢或輸入「主選單」返回主選單"
+                 "D結局: 2/9施展颶風咒+4/9把快浮交給艾略特+6/9可能有人不懷好意。禁忌森林是個做壞事的好地方+8/9你不想惹麻煩，於是你藏在了一棵樹後面+他不是海格告訴我的走私者+走上前偷聽對話"
         )
         self.go_back()
 
@@ -280,8 +530,7 @@ class TocMachine(GraphMachine):
             "結局路線\n"
                  "A結局: 什麼都不觸發\n"
                  "B結局: 0/8跟隨艾薇+2/8說服艾薇離開+3/8選右+4/8選右+5/8選左+6/8選放大鏡\n"
-                 "C結局: 0/8等待海格+2/8施放路摸思+熄滅魔杖，繼續前行\n\n"
-            "繼續輸入線索查詢或輸入「主選單」返回主選單"
+                 "C結局: 0/8等待海格+2/8施放路摸思+熄滅魔杖，繼續前行"
         )
         self.go_back()
 
@@ -307,8 +556,7 @@ class TocMachine(GraphMachine):
                  "A結局: 什麼都不觸發\n"
                  "B結局: 0/9尋找凱文+3/9使用修復咒+6/9使用繩繩禁+8/9凱文存活\n"
                  "C結局: 0/9尋找凱文+3/9使用修復咒+6/9使用繩繩禁+8/9凱文死亡\n"
-                 "D結局: 0/9尋找凱文+3/9忽略飛天掃帚+6/9使用繩繩禁\n\n"
-            "繼續輸入線索查詢或輸入「主選單」返回主選單"
+                 "D結局: 0/9尋找凱文+3/9忽略飛天掃帚+6/9使用繩繩禁"
         )
         self.go_back()
 
@@ -319,7 +567,8 @@ class TocMachine(GraphMachine):
         return False
 
     def on_enter_menu(self, event):
-        send_text_message(event.reply_token, "霍格華茲的學生你好\n"
-            "輸入「禁忌森林」取得禁森手記攻略\n輸入「大世界收集」取得家具獲取方式\n隨時輸入「fsm」取得fsm狀態圖"
+        send_text_message(event.reply_token, "霍格華茲的學生你好!\n"
+            "輸入「神秘成就」取得成就解鎖方式\n輸入「大世界收集」取得家具獲取方式\n輸入「占卜學圖鑑」查看圖鑑\n"
+            "輸入「禁忌森林」取得禁森手記攻略\n隨時輸入「fsm」取得fsm狀態圖"
         )
         self.go_back()

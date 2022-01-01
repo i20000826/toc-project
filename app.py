@@ -252,11 +252,11 @@ line_bot_api = LineBotApi(channel_access_token)
 parser = WebhookParser(channel_secret)
 
 
-@app.route("/callback", methods = ["POST"])
+@app.route("/callback", methods=["POST"])
 def callback():
     signature = request.headers["X-Line-Signature"]
     # get request body as text
-    body = request.get_data(as_text = True)
+    body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
 
     # parse webhook body
@@ -273,13 +273,13 @@ def callback():
             continue
 
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text = event.message.text)
+            event.reply_token, TextSendMessage(text=event.message.text)
         )
 
     return "OK"
 
 
-@app.route("/webhook", methods = ["POST"])
+@app.route("/webhook", methods=["POST"])
 def webhook_handler():
     signature = request.headers["X-Line-Signature"]
     # get request body as text
@@ -306,7 +306,7 @@ def webhook_handler():
         response = machine.advance(event)
 
         if response == False:
-            if event.message.text.lower() == 'fsm':
+            if event.message.text.lower() == "fsm":
                 send_image_message(event.reply_token, "https://f74086153.herokuapp.com/show-fsm")
                 # send_image_message(event.reply_token, "https://c351-36-237-107-170.ngrok.io/show-fsm")
             else:
@@ -315,13 +315,13 @@ def webhook_handler():
     return "OK"
 
 
-@app.route("/show-fsm", methods = ["GET"])
+@app.route("/show-fsm", methods=["GET"])
 def show_fsm():
-    machine.get_graph().draw("fsm.png", prog = "dot", format = "png")
-    return send_file("fsm.png", mimetype = "image/png")
+    machine.get_graph().draw("fsm.png", prog="dot", format="png")
+    return send_file("fsm.png", mimetype="image/png")
 
 
 if __name__ == "__main__":
     port = os.getenv("PORT", None)
     # port = os.environ.get("PORT", 8000)
-    app.run(host = "0.0.0.0", port = port, debug = True)
+    app.run(host="0.0.0.0", port=port, debug=True)

@@ -51,7 +51,7 @@ heroku buildpacks:set heroku/python
 
 heroku buildpacks:add --index 1 heroku-community/apt
 ```
-在line的webhook url輸入: `[HEROKU_APP_NAME].herokuapp.com/webhook` <br>
+在line的webhook url輸入: `https://[HEROKU_APP_NAME].herokuapp.com/webhook` <br>
 debug輸入: `heroku logs --tail --app [HEROKU_APP_NAME]` <br>
 
 ## Finite State Machine

@@ -22,7 +22,7 @@ def send_image_message(reply_token, url):
 
 def send_button_message(reply_token, title, text, btn, url):
     line_bot_api = LineBotApi(channel_access_token)
-    message = TemplateSendMessage(alt_text = 'button template', template = ButtonsTemplate(
+    message = TemplateSendMessage(alt_text = "button template", template = ButtonsTemplate(
             title = title,
             text = text,
             thumbnail_image_url = url,

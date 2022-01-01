@@ -1,4 +1,4 @@
-# Line聊天機器人
+# Line聊天機器人 -- 哈利波特:魔法覺醒 攻略
 
 ## 環境
 * windows
@@ -57,7 +57,22 @@ debug輸入: `heroku logs --tail --app [HEROKU_APP_NAME]` <br>
 ![fsm](./fsm.png)
 
 ## 實作
-The initial state is set to `user`.
+起因: 每次都要上網查攻略很麻煩, 而且有些~壞傢伙提供的~攻略資訊有誤, 於是透過本次作業將正確的攻略整合在一起, 方便查詢!
+
+初始state為"user" <br>
+"user"可以去到"achievement", "furniture", "divination_1", "forbidden_forest_1", "menu" <br>
+隨時都可以輸入「fsm」「主選單」
+
+### achievement 神秘成就
+
+### furniture 大世界收集
+
+### divination 占卜學圖鑑
+~幸好在project deadline前成功解完, 我好好看~
+
+### forbidden_forest 禁忌森林
+
+
 
 Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
 

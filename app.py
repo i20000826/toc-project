@@ -308,7 +308,7 @@ def webhook_handler():
         if response == False:
             if event.message.text.lower() == "fsm":
                 send_image_message(event.reply_token, "https://f74086153.herokuapp.com/show-fsm")
-                # send_image_message(event.reply_token, "https://c351-36-237-107-170.ngrok.io/show-fsm")
+                # send_image_message(event.reply_token, "https://4ed5-36-237-107-170.ngrok.io/show-fsm")
             else:
                 send_text_message(event.reply_token, "請輸入正確單詞")
 

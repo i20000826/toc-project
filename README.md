@@ -4,7 +4,7 @@
 ## 環境
 * windows
 * anaconda
-* ython 3.6
+* python 3.6
 * ngrok/Heroku
 
 ## 設定

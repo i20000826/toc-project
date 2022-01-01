@@ -16,7 +16,7 @@ pip install flask python-dotenv line-bot-sdk transitions pygraphviz
 ```
 
 #### ngrok
-下載ngrok
+下載ngrok<>
 在ngrok輸入: `ngrok http 8000`
 在terminal執行: `python app.py`
 
@@ -29,12 +29,19 @@ pip install flask python-dotenv line-bot-sdk transitions pygraphviz
 執行以下指令
 ```
 heroku config:set LINE_CHANNEL_SECRET=[YOUR_LINE_CHANNEL_SECRET]
+
 heroku config:set LINE_CHANNEL_ACCESS_TOKEN=[YOUR_LINE_CHANNEL_ACCESS_TOKEN]
+
 heroku buildpacks:set heroku/python
+
 heroku buildpacks:add --index 1 heroku-community/apt
+
 heroku git:remote -a [HEROKU_APP_NAME]
+
 git add .
+
 git commit -m "Add code"
+
 git push -f heroku master
 ```
 在line的webhook url輸入: `[HEROKU_APP_NAME].herokuapp.com/webhook`

@@ -281,6 +281,7 @@ def callback():
 
 @app.route("/webhook", methods=["POST"])
 def webhook_handler():
+    global url
     signature = request.headers["X-Line-Signature"]
     # get request body as text
     body = request.get_data(as_text=True)
@@ -303,11 +304,13 @@ def webhook_handler():
         print(f"\nFSM STATE: {machine.state}")
         print(f"REQUEST BODY: \n{body}")
 
+        url = "https://i.imgur.com/AdVc8cO.jpg"
         response = machine.advance(event)
 
         if response == False:
             if event.message.text.lower() == "fsm":
-                send_image_message(event.reply_token, "https://f74086153.herokuapp.com/show-fsm")
+                send_image_message(event.reply_token, url)
+                # send_image_message(event.reply_token, "https://f74086153.herokuapp.com/show-fsm")
                 # send_image_message(event.reply_token, "https://c93a-36-237-107-170.ngrok.io/show-fsm")
             else:
                 send_text_message(event.reply_token, "請輸入正確單詞")
@@ -317,8 +320,8 @@ def webhook_handler():
 
 @app.route("/show-fsm", methods=["GET"])
 def show_fsm():
-    machine.get_graph().draw("fsm.jpg", prog="dot", format="jpg")
-    return send_file("fsm.jpg", mimetype="image/jpg")
+    machine.get_graph().draw("fsm.png", prog="dot", format="png")
+    return send_file("fsm.png", mimetype="image/png")
 
 
 if __name__ == "__main__":

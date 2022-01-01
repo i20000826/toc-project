@@ -1,4 +1,5 @@
 # Line聊天機器人 -- 哈利波特:魔法覺醒 攻略
+霍格華茲的學生絕不認輸!
 
 ## 環境
 * windows
@@ -79,6 +80,7 @@ debug輸入: `heroku logs --tail --app [HEROKU_APP_NAME]` <br>
 	* 巨蛛殺手
 
 #### line畫面
+![02](./img/02.PNG)
 
 ### furniture 大世界收集
 
@@ -107,6 +109,8 @@ debug輸入: `heroku logs --tail --app [HEROKU_APP_NAME]` <br>
 		* 紫角獸地毯
 
 #### line畫面
+![03](./img/03.PNG)
+![04](./img/04.PNG)
 
 ### divination 占卜學圖鑑
 ~幸好在project deadline前成功解完, 我好好看~
@@ -123,6 +127,9 @@ debug輸入: `heroku logs --tail --app [HEROKU_APP_NAME]` <br>
 	* 上一輪
 
 #### line畫面
+![05](./img/05.PNG)
+![06](./img/06.PNG)
+![07](./img/07.PNG)
 
 ### forbidden_forest 禁忌森林
 
@@ -144,5 +151,11 @@ debug輸入: `heroku logs --tail --app [HEROKU_APP_NAME]` <br>
 	* 第一批線索
 
 #### line畫面
-
-
+![08](./img/08.PNG)
+![09](./img/09.PNG)
+![10](./img/10.PNG)
+![11](./img/11.PNG)
+![12](./img/12.PNG)
+![13](./img/13.PNG)
+![14](./img/14.PNG)
+![15](./img/15.PNG)

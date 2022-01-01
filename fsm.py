@@ -2,10 +2,11 @@ from transitions.extensions import GraphMachine
 from linebot.models import MessageTemplateAction
 from utils import send_text_message, send_image_message, send_button_message
 
-
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model = self, **machine_configs)
+
+    # 神秘成就
 
     def is_going_to_achievement(self, event):
         text = event.message.text
@@ -25,6 +26,8 @@ class TocMachine(GraphMachine):
             "巨蛛殺手: 15分鐘內通關巨蛛領地五星難度\n\n"
             "輸入「主選單」返回主選單"
         )
+
+    # 大世界收集
 
     def is_going_to_furniture(self, event):
         text = event.message.text
@@ -100,6 +103,8 @@ class TocMachine(GraphMachine):
             "地毯 紫角獸地毯: 紫角獸之災"
         )
         self.go_back()
+    
+    # 占卜學圖鑑
 
     def is_going_to_divination_1(self, event):
         text = event.message.text
@@ -206,6 +211,8 @@ class TocMachine(GraphMachine):
     def on_enter_level_5(self, event):
         send_image_message(event.reply_token, "https://i.imgur.com/llUEvYn.jpg")
         self.go_back()
+
+    #禁忌森林
 
     def is_going_to_forbidden_forest_1(self, event):
         text = event.message.text
@@ -559,6 +566,8 @@ class TocMachine(GraphMachine):
                  "D結局: 0/9尋找凱文+3/9忽略飛天掃帚+6/9使用繩繩禁"
         )
         self.go_back()
+
+    # 主選單
 
     def is_going_to_menu(self, event):
         text = event.message.text

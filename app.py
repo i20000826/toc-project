@@ -281,7 +281,6 @@ def callback():
 
 @app.route("/webhook", methods=["POST"])
 def webhook_handler():
-    global url
     signature = request.headers["X-Line-Signature"]
     # get request body as text
     body = request.get_data(as_text=True)

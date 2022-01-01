@@ -563,7 +563,6 @@ class TocMachine(GraphMachine):
     def is_going_to_menu(self, event):
         text = event.message.text
         if (text == "主選單"):
-            url = "https://i.imgur.com/VpnqOCY.jpg" # level_3
             return True
         return False
 

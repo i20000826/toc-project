@@ -21,11 +21,11 @@ pip install flask python-dotenv line-bot-sdk transitions pygraphviz
 在terminal執行: `python app.py`
 
 #### Heroku
-下載Heroku CLI: https://devcenter.heroku.com/articles/heroku-cli
-註冊Heroku帳號: https://signup.heroku.com
-在Heroku網站Create new app
+下載Heroku CLI: https://devcenter.heroku.com/articles/heroku-cli<br>
+註冊Heroku帳號: https://signup.heroku.com<br>
+在Heroku網站Create new app<br>
 在terminal登入Heroku CLI: `heroku login`
-如果無法辨識heroku: `set PATH=%PATH%;C:\Program Files\heroku\bin`(heroku路徑)
+如果無法辨識heroku: `set PATH=%PATH%;C:\Program Files\heroku\bin`(heroku路徑)<br>
 執行以下指令
 ```
 heroku config:set LINE_CHANNEL_SECRET=[YOUR_LINE_CHANNEL_SECRET]
